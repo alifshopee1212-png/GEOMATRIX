@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KALKULATOR GEOMETRI LENGKAP + TUTORIAL - DARK AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-2d: #2196f3;
+            --secondary-2d: #64b5f6;
+            --primary-3d: #4caf50;
+            --secondary-3d: #81c784;
+            --dark-bg: #0a1929;
+            --card-bg: #132f4c;
+            --text-primary: #e6f1ff;
+            --text-secondary: #a8b2d1;
+            --accent: #64ffda;
+            --danger: #ff6b6b;
+            --warning: #ffd166;
+            --purple: #c792ea;
+            --pink: #ff6b9d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a1929, #0c2d4d, #112240);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(16, 42, 67, 0.9), rgba(10, 25, 41, 0.9));
+            border-radius: 25px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 10, 30, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-2d), var(--primary-3d), var(--accent));
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            background: linear-gradient(45deg, var(--primary-2d), var(--accent), var(--primary-3d));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* MODE SELECTOR */
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .mode-card {
+            background: rgba(19, 47, 76, 0.8);
+            border-radius: 20px;
+            padding: 25px 40px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            min-width: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card.active {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(100, 255, 218, 0.15);
+        }
+
+        .mode-2d.active {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(19, 47, 76, 0.8));
+        }
+
+        .mode-3d.active {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(19, 47, 76, 0.8));
+        }
+
+        .mode-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .mode-2d .mode-icon {
+            color: var(--primary-2d);
+        }
+
+        .mode-3d .mode-icon {
+            color: var(--primary-3d);
+        }
+
+        .mode-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .mode-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* MAIN GRID */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* CARD STYLES */
+        .card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 255, 218, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .card-title i {
+            font-size: 1.5rem;
+        }
+
+        /* SHAPE SELECTOR */
+        .shape-selector {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .shape-select {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 15px;
+            border: 2px solid #2a4d7a;
+            background: rgba(10, 25, 41, 0.8);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 500;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364ffda' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 25px center;
+            background-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .shape-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+        }
+
+        /* INPUT FIELDS */
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-label i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border: 2px solid #2a4d7a;
+            background: rgba(10, 25, 41, 0.8);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-family: 'Roboto Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+        }
+
+        .input-field.invalid {
+            border-color: var(--danger);
+        }
+
+        .unit-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .unit-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .unit-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .unit-btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 2px solid #2a4d7a;
+            background: rgba(10, 25, 41, 0.8);
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .unit-btn.active {
+            background: var(--accent);
+            color: #0a1929;
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* BUTTONS */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 20px 30px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, var(--primary-2d), var(--primary-3d));
+            color: white;
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* VISUALIZATION */
+        .visualization-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 350px;
+            background: rgba(10, 25, 41, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .shape-display {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        /* 2D SHAPES */
+        .shape-2d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .square-viz {
+            width: 180px;
+            height: 180px;
+            background: rgba(33, 150, 243, 0.2);
+            border: 4px solid var(--primary-2d);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .square-viz::after {
+            content: 's';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-2d);
+            font-weight: bold;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .rectangle-viz {
+            width: 220px;
+            height: 150px;
+            background: rgba(33, 150, 243, 0.2);
+            border: 4px solid var(--primary-2d);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .triangle-viz {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 180px solid rgba(33, 150, 243, 0.2);
+            position: relative;
+        }
+
+        .circle-viz {
+            width: 180px;
+            height: 180px;
+            background: rgba(33, 150, 243, 0.2);
+            border: 4px solid var(--primary-2d);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .circle-viz::after {
+            content: 'r';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary-2d);
+            font-weight: bold;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* 3D SHAPES */
+        .shape-3d {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(20deg);
+            transition: transform 1s ease;
+        }
+
+        .cube-3d {
+            transform: rotateX(-20deg) rotateY(20deg);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(76, 175, 80, 0.15);
+            border: 2px solid var(--primary-3d);
+            opacity: 0.8;
+        }
+
+        .cube-face.front { transform: translateZ(75px); }
+        .cube-face.back { transform: translateZ(-75px) rotateY(180deg); }
+        .cube-face.right { transform: translateX(75px) rotateY(90deg); }
+        .cube-face.left { transform: translateX(-75px) rotateY(-90deg); }
+        .cube-face.top { transform: translateY(-75px) rotateX(90deg); }
+        .cube-face.bottom { transform: translateY(75px) rotateX(-90deg); }
+
+        .sphere-3d {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.05));
+            border-radius: 50%;
+            border: 3px solid var(--primary-3d);
+            box-shadow: inset 0 0 50px rgba(76, 175, 80, 0.2);
+        }
+
+        /* RESULTS */
+        .results-container {
+            background: rgba(10, 25, 41, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .result-box {
+            background: rgba(19, 47, 76, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .result-type {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-number {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .result-unit {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* TUTORIAL SECTION */
+        .tutorial-container {
+            background: rgba(10, 25, 41, 0.9);
+            border-radius: 25px;
+            padding: 35px;
+            margin-top: 40px;
+            border: 1px solid rgba(199, 146, 234, 0.2);
+        }
+
+        .tutorial-title {
+            font-size: 2rem;
+            color: var(--purple);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .tutorial-step {
+            background: rgba(30, 60, 100, 0.5);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--purple);
+            color: #0a1929;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .formula-box {
+            background: rgba(19, 47, 76, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid var(--warning);
+            font-family: 'Roboto Mono', monospace;
+            color: var(--warning);
+            overflow-x: auto;
+        }
+
+        .example-box {
+            background: rgba(10, 25, 41, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .example-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* HISTORY */
+        .history-container {
+            margin-top: 40px;
+        }
+
+        .history-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .history-item {
+            background: rgba(19, 47, 76, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .history-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2rem; }
+            .main-grid { gap: 20px; }
+            .card { padding: 25px; }
+            .btn { padding: 18px 25px; font-size: 1.1rem; }
+            .shape-display { width: 200px; height: 200px; }
+            .input-grid { grid-template-columns: 1fr; }
+            .result-values { grid-template-columns: 1fr; }
+            .tutorial-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header fade-in">
+            <h1><i class="fas fa-calculator"></i> KALKULATOR GEOMETRI PRO</h1>
+            <p class="subtitle">Lengkap dengan Tutorial Step-by-Step untuk Semua Bangun Datar dan Bangun Ruang</p>
+            <div style="margin-top: 20px; color: var(--accent);">
+                <i class="fas fa-bolt"></i> DARK AI GEN 4 | Powered by @PengodeHandal01
+            </div>
+        </header>
+
+        <!-- MODE SELECTOR -->
+        <div class="mode-selector">
+            <div class="mode-card mode-2d active" id="mode2dCard">
+                <i class="fas fa-shapes mode-icon"></i>
+                <div class="mode-title">BANGUN DATAR</div>
+                <div class="mode-desc">Hitung Luas & Keliling<br>10 Jenis Bangun</div>
+            </div>
+            <div class="mode-card mode-3d" id="mode3dCard">
+                <i class="fas fa-cube mode-icon"></i>
+                <div class="mode-title">BANGUN RUANG</div>
+                <div class="mode-desc">Hitung Volume & Luas Permukaan<br>9 Jenis Bangun</div>
+            </div>
+        </div>
+
+        <!-- MAIN CALCULATOR -->
+        <div class="main-grid">
+            <!-- LEFT: INPUT SECTION -->
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-sliders-h"></i> INPUT PARAMETER</h2>
+                
+                <!-- Shape Selection -->
+                <div class="shape-selector">
+                    <select id="shapeSelect" class="shape-select">
+                        <!-- 2D Shapes -->
+                        <optgroup label="BANGUN DATAR" id="2dGroup">
+                            <option value="square">🔲 Persegi</option>
+                            <option value="rectangle">⬜ Persegi Panjang</option>
+                            <option value="triangle">🔺 Segitiga</option>
+                            <option value="circle">⭕ Lingkaran</option>
+                            <option value="trapezoid">🔻 Trapesium</option>
+                            <option value="parallelogram">▱ Jajar Genjang</option>
+                            <option value="rhombus">🔷 Belah Ketupat</option>
+                            <option value="kite">🪁 Layang-layang</option>
+                            <option value="pentagon">⬟ Segi Lima</option>
+                            <option value="hexagon">⬢ Segi Enam</option>
+                        </optgroup>
+                        <!-- 3D Shapes -->
+                        <optgroup label="BANGUN RUANG" id="3dGroup" style="display:none;">
+                            <option value="cube">🧊 Kubus</option>
+                            <option value="cuboid">📦 Balok</option>
+                            <option value="sphere">🔵 Bola</option>
+                            <option value="cylinder">🧪 Tabung</option>
+                            <option value="cone">🎯 Kerucut</option>
+                            <option value="pyramid">🔺 Limas Segiempat</option>
+                            <option value="triangularPrism">🔺 Prisma Segitiga</option>
+                            <option value="triangularPyramid">🔺 Limas Segitiga</option>
+                            <option value="pentagonalPrism">⬟ Prisma Segilima</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- Unit Selection -->
+                <div class="unit-section">
+                    <div class="unit-label">SATUAN:</div>
+                    <div class="unit-buttons">
+                        <button class="unit-btn active" data-unit="cm">cm</button>
+                        <button class="unit-btn" data-unit="m">m</button>
+                        <button class="unit-btn" data-unit="mm">mm</button>
+                        <button class="unit-btn" data-unit="in">inch</button>
+                        <button class="unit-btn" data-unit="ft">feet</button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Inputs -->
+                <div id="inputContainer" class="input-grid">
+                    <!-- Generated inputs here -->
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-calculate" id="calculateBtn">
+                        <i class="fas fa-bolt"></i> HITUNG SEKARANG
+                    </button>
+                    <button class="btn btn-reset" id="resetBtn">
+                        <i class="fas fa-redo"></i> RESET
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT: VISUALIZATION & RESULTS -->
+            <div class="card">
+                <!-- Visualization -->
+                <div class="visualization-container">
+                    <h2 class="card-title"><i class="fas fa-eye"></i> VISUALISASI BANGUN</h2>
+                    <div class="shape-display" id="shapeVisual">
+                        <div class="square-viz shape-2d"></div>
+                    </div>
+                    <div id="shapeName" style="font-size: 1.8rem; color: var(--accent); font-weight: 600;">
+                        Persegi
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div id="resultContainer" class="results-container" style="display: none;">
+                    <div class="result-header">
+                        <div class="result-title">
+                            <i class="fas fa-chart-bar"></i> HASIL PERHITUNGAN
+                        </div>
+                        <div id="resultTimestamp" style="color: var(--text-secondary);">
+                            Baru saja
+                        </div>
+                    </div>
+                    <div class="result-values" id="resultValues">
+                        <!-- Results will be here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TUTORIAL SECTION -->
+        <div id="tutorialSection" class="tutorial-container fade-in">
+            <h2 class="tutorial-title">
+                <i class="fas fa-graduation-cap"></i> TUTORIAL LENGKAP PERHITUNGAN
+            </h2>
+            
+            <div class="tutorial-grid" id="tutorialContent">
+                <!-- Tutorial will be generated here -->
+            </div>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="history-container">
+            <h2 class="card-title"><i class="fas fa-history"></i> RIWAYAT PERHITUNGAN</h2>
+            <div class="history-list" id="historyList">
+                <!-- History items here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL VARIABLES ====================
+        let currentMode = '2d';
+        let currentShape = 'square';
+        let currentUnit = 'cm';
+        let calculationHistory = [];
+
+        // ==================== COMPLETE SHAPE DEFINITIONS ====================
+        const shapeLibrary = {
+            // ========== 2D SHAPES ==========
+            square: {
+                name: "Persegi",
+                category: "2d",
+                inputs: [
+                    {id: "side", label: "Sisi (s)", icon: "fas fa-ruler", description: "Panjang sisi persegi"}
+                ],
+                formulas: {
+                    area: "L = s × s = s²",
+                    perimeter: "K = 4 × s"
+                },
+                calculate: function(inputs) {
+                    const s = inputs.side;
+                    return {
+                        area: s * s,
+                        perimeter: 4 * s
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Persegi",
+                        content: "Persegi adalah bangun datar 2D dengan 4 sisi sama panjang dan 4 sudut siku-siku (90°)."
+                    },
+                    {
+                        title: "Rumus Luas Persegi",
+                        content: `Luas persegi = sisi × sisi = s²
+                        
+                        <div class="formula-box">
+                        L = s × s
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s = 5 cm, maka:
+                        L = 5 × 5 = 25 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Keliling Persegi",
+                        content: `Keliling persegi = 4 × sisi
+                        
+                        <div class="formula-box">
+                        K = 4 × s
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s = 5 cm, maka:
+                        K = 4 × 5 = 20 cm
+                        </div>`
+                    }
+                ]
+            },
+
+            rectangle: {
+                name: "Persegi Panjang",
+                category: "2d",
+                inputs: [
+                    {id: "length", label: "Panjang (p)", icon: "fas fa-ruler-vertical", description: "Panjang persegi panjang"},
+                    {id: "width", label: "Lebar (l)", icon: "fas fa-ruler-horizontal", description: "Lebar persegi panjang"}
+                ],
+                formulas: {
+                    area: "L = p × l",
+                    perimeter: "K = 2 × (p + l)"
+                },
+                calculate: function(inputs) {
+                    const p = inputs.length;
+                    const l = inputs.width;
+                    return {
+                        area: p * l,
+                        perimeter: 2 * (p + l)
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Persegi Panjang",
+                        content: "Persegi panjang memiliki 4 sisi dengan sisi-sisi berhadapan sama panjang dan 4 sudut siku-siku."
+                    },
+                    {
+                        title: "Rumus Luas Persegi Panjang",
+                        content: `Luas = panjang × lebar
+                        
+                        <div class="formula-box">
+                        L = p × l
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika p = 8 cm, l = 5 cm, maka:
+                        L = 8 × 5 = 40 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Keliling Persegi Panjang",
+                        content: `Keliling = 2 × (panjang + lebar)
+                        
+                        <div class="formula-box">
+                        K = 2 × (p + l)
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika p = 8 cm, l = 5 cm, maka:
+                        K = 2 × (8 + 5) = 2 × 13 = 26 cm
+                        </div>`
+                    }
+                ]
+            },
+
+            triangle: {
+                name: "Segitiga",
+                category: "2d",
+                inputs: [
+                    {id: "base", label: "Alas (a)", icon: "fas fa-vector-square", description: "Alas segitiga"},
+                    {id: "height", label: "Tinggi (t)", icon: "fas fa-long-arrow-alt-up", description: "Tinggi segitiga"},
+                    {id: "side1", label: "Sisi 1", icon: "fas fa-arrow-right", description: "Panjang sisi pertama"},
+                    {id: "side2", label: "Sisi 2", icon: "fas fa-arrow-right", description: "Panjang sisi kedua"},
+                    {id: "side3", label: "Sisi 3", icon: "fas fa-arrow-right", description: "Panjang sisi ketiga"}
+                ],
+                formulas: {
+                    area: "L = ½ × a × t",
+                    perimeter: "K = s₁ + s₂ + s₃"
+                },
+                calculate: function(inputs) {
+                    const a = inputs.base;
+                    const t = inputs.height;
+                    const s1 = inputs.side1;
+                    const s2 = inputs.side2;
+                    const s3 = inputs.side3;
+                    return {
+                        area: 0.5 * a * t,
+                        perimeter: s1 + s2 + s3
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Segitiga",
+                        content: "Segitiga adalah bangun datar dengan 3 sisi dan 3 sudut. Jumlah semua sudut selalu 180°."
+                    },
+                    {
+                        title: "Rumus Luas Segitiga",
+                        content: `Luas = ½ × alas × tinggi
+                        
+                        <div class="formula-box">
+                        L = ½ × a × t
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika a = 10 cm, t = 6 cm, maka:
+                        L = ½ × 10 × 6 = 5 × 6 = 30 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Keliling Segitiga",
+                        content: `Keliling = jumlah ketiga sisi
+                        
+                        <div class="formula-box">
+                        K = s₁ + s₂ + s₃
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s₁ = 5 cm, s₂ = 6 cm, s₃ = 7 cm, maka:
+                        K = 5 + 6 + 7 = 18 cm
+                        </div>`
+                    }
+                ]
+            },
+
+            circle: {
+                name: "Lingkaran",
+                category: "2d",
+                inputs: [
+                    {id: "radius", label: "Jari-jari (r)", icon: "fas fa-circle", description: "Jari-jari lingkaran"}
+                ],
+                formulas: {
+                    area: "L = π × r²",
+                    circumference: "K = 2 × π × r"
+                },
+                calculate: function(inputs) {
+                    const r = inputs.radius;
+                    return {
+                        area: Math.PI * r * r,
+                        circumference: 2 * Math.PI * r
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Lingkaran",
+                        content: "Lingkaran adalah himpunan titik-titik yang berjarak sama dari titik pusat. π (pi) ≈ 3.14159."
+                    },
+                    {
+                        title: "Rumus Luas Lingkaran",
+                        content: `Luas = π × jari-jari²
+                        
+                        <div class="formula-box">
+                        L = π × r²
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 7 cm, maka:
+                        L = π × 7² = π × 49 ≈ 153.94 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Keliling Lingkaran",
+                        content: `Keliling = 2 × π × jari-jari
+                        
+                        <div class="formula-box">
+                        K = 2 × π × r
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 7 cm, maka:
+                        K = 2 × π × 7 = 14π ≈ 43.98 cm
+                        </div>`
+                    }
+                ]
+            },
+
+            // ========== 3D SHAPES ==========
+            cube: {
+                name: "Kubus",
+                category: "3d",
+                inputs: [
+                    {id: "side", label: "Sisi (s)", icon: "fas fa-cube", description: "Panjang sisi kubus"}
+                ],
+                formulas: {
+                    surfaceArea: "L = 6 × s²",
+                    volume: "V = s³"
+                },
+                calculate: function(inputs) {
+                    const s = inputs.side;
+                    return {
+                        surfaceArea: 6 * s * s,
+                        volume: s * s * s
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Kubus",
+                        content: "Kubus adalah bangun ruang 3D dengan 6 sisi persegi yang sama besar."
+                    },
+                    {
+                        title: "Rumus Luas Permukaan Kubus",
+                        content: `Luas permukaan = 6 × sisi²
+                        
+                        <div class="formula-box">
+                        L = 6 × s²
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s = 4 cm, maka:
+                        L = 6 × 4² = 6 × 16 = 96 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Volume Kubus",
+                        content: `Volume = sisi³
+                        
+                        <div class="formula-box">
+                        V = s³
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s = 4 cm, maka:
+                        V = 4³ = 4 × 4 × 4 = 64 cm³
+                        </div>`
+                    }
+                ]
+            },
+
+            cuboid: {
+                name: "Balok",
+                category: "3d",
+                inputs: [
+                    {id: "length", label: "Panjang (p)", icon: "fas fa-ruler-vertical", description: "Panjang balok"},
+                    {id: "width", label: "Lebar (l)", icon: "fas fa-ruler-horizontal", description: "Lebar balok"},
+                    {id: "height", label: "Tinggi (t)", icon: "fas fa-arrows-alt-v", description: "Tinggi balok"}
+                ],
+                formulas: {
+                    surfaceArea: "L = 2 × (pl + pt + lt)",
+                    volume: "V = p × l × t"
+                },
+                calculate: function(inputs) {
+                    const p = inputs.length;
+                    const l = inputs.width;
+                    const t = inputs.height;
+                    return {
+                        surfaceArea: 2 * (p*l + p*t + l*t),
+                        volume: p * l * t
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Balok",
+                        content: "Balok memiliki 6 sisi persegi panjang dengan sisi berhadapan sama besar."
+                    },
+                    {
+                        title: "Rumus Luas Permukaan Balok",
+                        content: `L = 2 × (panjang×lebar + panjang×tinggi + lebar×tinggi)
+                        
+                        <div class="formula-box">
+                        L = 2 × (pl + pt + lt)
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika p = 8 cm, l = 5 cm, t = 4 cm, maka:
+                        L = 2 × (8×5 + 8×4 + 5×4) 
+                        = 2 × (40 + 32 + 20)
+                        = 2 × 92 = 184 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Volume Balok",
+                        content: `Volume = panjang × lebar × tinggi
+                        
+                        <div class="formula-box">
+                        V = p × l × t
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika p = 8 cm, l = 5 cm, t = 4 cm, maka:
+                        V = 8 × 5 × 4 = 160 cm³
+                        </div>`
+                    }
+                ]
+            },
+
+            sphere: {
+                name: "Bola",
+                category: "3d",
+                inputs: [
+                    {id: "radius", label: "Jari-jari (r)", icon: "fas fa-circle", description: "Jari-jari bola"}
+                ],
+                formulas: {
+                    surfaceArea: "L = 4 × π × r²",
+                    volume: "V = 4/3 × π × r³"
+                },
+                calculate: function(inputs) {
+                    const r = inputs.radius;
+                    return {
+                        surfaceArea: 4 * Math.PI * r * r,
+                        volume: (4/3) * Math.PI * Math.pow(r, 3)
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Bola",
+                        content: "Bola adalah bangun ruang 3D dengan semua titik di permukaannya berjarak sama dari titik pusat."
+                    },
+                    {
+                        title: "Rumus Luas Permukaan Bola",
+                        content: `Luas permukaan = 4 × π × jari-jari²
+                        
+                        <div class="formula-box">
+                        L = 4 × π × r²
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 7 cm, maka:
+                        L = 4 × π × 7² = 4 × π × 49 ≈ 615.75 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Volume Bola",
+                        content: `Volume = 4/3 × π × jari-jari³
+                        
+                        <div class="formula-box">
+                        V = 4/3 × π × r³
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 7 cm, maka:
+                        V = 4/3 × π × 7³ = 4/3 × π × 343 ≈ 1436.76 cm³
+                        </div>`
+                    }
+                ]
+            },
+
+            cylinder: {
+                name: "Tabung",
+                category: "3d",
+                inputs: [
+                    {id: "radius", label: "Jari-jari (r)", icon: "fas fa-circle", description: "Jari-jari alas tabung"},
+                    {id: "height", label: "Tinggi (t)", icon: "fas fa-arrows-alt-v", description: "Tinggi tabung"}
+                ],
+                formulas: {
+                    surfaceArea: "L = 2πr(r + t)",
+                    volume: "V = π × r² × t"
+                },
+                calculate: function(inputs) {
+                    const r = inputs.radius;
+                    const t = inputs.height;
+                    return {
+                        surfaceArea: 2 * Math.PI * r * (r + t),
+                        volume: Math.PI * r * r * t
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Tabung",
+                        content: "Tabung memiliki 2 alas lingkaran identik dan selimut berbentuk persegi panjang."
+                    },
+                    {
+                        title: "Rumus Luas Permukaan Tabung",
+                        content: `L = 2πr(r + t) = luas 2 lingkaran + luas selimut
+                        
+                        <div class="formula-box">
+                        L = 2πr(r + t)
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 5 cm, t = 10 cm, maka:
+                        L = 2 × π × 5 × (5 + 10)
+                        = 2 × π × 5 × 15
+                        = 150π ≈ 471.24 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Volume Tabung",
+                        content: `Volume = luas alas × tinggi = πr²t
+                        
+                        <div class="formula-box">
+                        V = π × r² × t
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 5 cm, t = 10 cm, maka:
+                        V = π × 5² × 10
+                        = π × 25 × 10
+                        = 250π ≈ 785.4 cm³
+                        </div>`
+                    }
+                ]
+            },
+
+            cone: {
+                name: "Kerucut",
+                category: "3d",
+                inputs: [
+                    {id: "radius", label: "Jari-jari (r)", icon: "fas fa-circle", description: "Jari-jari alas kerucut"},
+                    {id: "height", label: "Tinggi (t)", icon: "fas fa-arrows-alt-v", description: "Tinggi kerucut"},
+                    {id: "slant", label: "Garis Pelukis (s)", icon: "fas fa-slash", description: "Garis pelukis kerucut (opsional)"}
+                ],
+                formulas: {
+                    surfaceArea: "L = πr(r + s)",
+                    volume: "V = ⅓ × π × r² × t"
+                },
+                calculate: function(inputs) {
+                    const r = inputs.radius;
+                    const t = inputs.height;
+                    const s = inputs.slant || Math.sqrt(r*r + t*t);
+                    return {
+                        surfaceArea: Math.PI * r * (r + s),
+                        volume: (1/3) * Math.PI * r * r * t
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Kerucut",
+                        content: "Kerucut memiliki alas lingkaran dan titik puncak. Garis pelukis (s) = √(r² + t²)."
+                    },
+                    {
+                        title: "Rumus Luas Permukaan Kerucut",
+                        content: `L = luas alas + luas selimut = πr² + πrs = πr(r + s)
+                        
+                        <div class="formula-box">
+                        L = πr(r + s) dimana s = √(r² + t²)
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 6 cm, t = 8 cm, maka:
+                        s = √(6² + 8²) = √(36 + 64) = √100 = 10 cm
+                        L = π × 6 × (6 + 10) = π × 6 × 16 = 96π ≈ 301.59 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Volume Kerucut",
+                        content: `Volume = ⅓ × luas alas × tinggi
+                        
+                        <div class="formula-box">
+                        V = ⅓ × π × r² × t
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika r = 6 cm, t = 8 cm, maka:
+                        V = ⅓ × π × 6² × 8
+                        = ⅓ × π × 36 × 8
+                        = 96π ≈ 301.59 cm³
+                        </div>`
+                    }
+                ]
+            },
+
+            pyramid: {
+                name: "Limas Segiempat",
+                category: "3d",
+                inputs: [
+                    {id: "baseSide", label: "Sisi Alas (s)", icon: "fas fa-square", description: "Panjang sisi alas persegi"},
+                    {id: "height", label: "Tinggi Limas (t)", icon: "fas fa-mountain", description: "Tinggi limas dari puncak ke alas"}
+                ],
+                formulas: {
+                    surfaceArea: "L = luas alas + 4 × luas segitiga sisi",
+                    volume: "V = ⅓ × luas alas × tinggi"
+                },
+                calculate: function(inputs) {
+                    const s = inputs.baseSide;
+                    const t = inputs.height;
+                    const baseArea = s * s;
+                    const triangleHeight = Math.sqrt(t*t + Math.pow(s/2, 2));
+                    const triangleArea = 0.5 * s * triangleHeight;
+                    return {
+                        surfaceArea: baseArea + 4 * triangleArea,
+                        volume: (1/3) * baseArea * t
+                    };
+                },
+                tutorial: [
+                    {
+                        title: "Definisi Limas Segiempat",
+                        content: "Limas dengan alas persegi dan 4 sisi segitiga bertemu di satu puncak."
+                    },
+                    {
+                        title: "Rumus Luas Permukaan Limas Segiempat",
+                        content: `L = luas alas + 4 × luas segitiga sisi
+                        dimana tinggi segitiga = √(t² + (s/2)²)
+                        
+                        <div class="formula-box">
+                        L = s² + 4 × (½ × s × √(t² + (s/2)²))
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s = 6 cm, t = 8 cm, maka:
+                        tinggi segitiga = √(8² + 3²) = √(64 + 9) = √73 ≈ 8.544 cm
+                        L = 36 + 4 × (½ × 6 × 8.544)
+                        = 36 + 4 × 25.632 = 36 + 102.528 = 138.53 cm²
+                        </div>`
+                    },
+                    {
+                        title: "Rumus Volume Limas Segiempat",
+                        content: `Volume = ⅓ × luas alas × tinggi
+                        
+                        <div class="formula-box">
+                        V = ⅓ × s² × t
+                        </div>
+                        
+                        <div class="example-box">
+                        <div class="example-title">Contoh:</div>
+                        Jika s = 6 cm, t = 8 cm, maka:
+                        V = ⅓ × 36 × 8 = 12 × 8 = 96 cm³
+                        </div>`
+                    }
+                ]
+            }
+        };
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApplication();
+        });
+
+        function initializeApplication() {
+            // Mode switching
+            document.getElementById('mode2dCard').addEventListener('click', () => switchMode('2d'));
+            document.getElementById('mode3dCard').addEventListener('click', () => switchMode('3d'));
+            
+            // Shape selection
+            document.getElementById('shapeSelect').addEventListener('change', updateShape);
+            
+            // Unit buttons
+            document.querySelectorAll('.unit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentUnit = this.dataset.unit;
+                });
+            });
+            
+            // Action buttons
+            document.getElementById('calculateBtn').addEventListener('click', performCalculation);
+            document.getElementById('resetBtn').addEventListener('click', resetCalculator);
+            
+            // Load history from localStorage
+            loadHistoryFromStorage();
+            
+            // Initial render
+            updateShape();
+            updateTutorial();
+        }
+
+        // ==================== MODE MANAGEMENT ====================
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update UI cards
+            const mode2dCard = document.getElementById('mode2dCard');
+            const mode3dCard = document.getElementById('mode3dCard');
+            
+            mode2dCard.classList.toggle('active', mode === '2d');
+            mode3dCard.classList.toggle('active', mode === '3d');
+            
+            // Update shape select options
+            const shapeSelect = document.getElementById('shapeSelect');
+            const group2d = document.getElementById('2dGroup');
+            const group3d = document.getElementById('3dGroup');
+            
+            if (mode === '2d') {
+                group2d.style.display = 'block';
+                group3d.style.display = 'none';
+                shapeSelect.value = 'square';
+            } else {
+                group2d.style.display = 'none';
+                group3d.style.display = 'block';
+                shapeSelect.value = 'cube';
+            }
+            
+            // Update everything
+            updateShape();
+            updateTutorial();
+            
+            // Reset results
+            document.getElementById('resultContainer').style.display = 'none';
+        }
+
+        // ==================== SHAPE MANAGEMENT ====================
+        function updateShape() {
+            currentShape = document.getElementById('shapeSelect').value;
+            const shape = shapeLibrary[currentShape];
+            
+            if (!shape) return;
+            
+            // Update shape name display
+            document.getElementById('shapeName').textContent = shape.name;
+            
+            // Generate input fields
+            generateInputFields(shape.inputs);
+            
+            // Update visualization
+            updateVisualization();
+            
+            // Update tutorial
+            updateTutorial();
+        }
+
+        function generateInputFields(inputs) {
+            const container = document.getElementById('inputContainer');
+            container.innerHTML = '';
+            
+            inputs.forEach(input => {
+                const inputGroup = document.createElement('div');
+                inputGroup.className = 'input-group';
+                inputGroup.innerHTML = `
+                    <label class="input-label">
+                        <i class="${input.icon}"></i> ${input.label}
+                    </label>
+                    <input type="number" 
+                           id="${input.id}" 
+                           class="input-field"
+                           min="0.01" 
+                           step="any" 
+                           placeholder="Masukkan ${input.label}"
+                           oninput="validateNumberInput(this)">
+                    <small style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px; display: block;">
+                        ${input.description}
+                    </small>
+                `;
+                container.appendChild(inputGroup);
+            });
+        }
+
+        function updateVisualization() {
+            const container = document.getElementById('shapeVisual');
+            container.innerHTML = '';
+            
+            const shape = shapeLibrary[currentShape];
+            let visualHTML = '';
+            
+            if (shape.category === '2d') {
+                switch(currentShape) {
+                    case 'square':
+                        visualHTML = '<div class="square-viz shape-2d"></div>';
+                        break;
+                    case 'rectangle':
+                        visualHTML = '<div class="rectangle-viz shape-2d"></div>';
+                        break;
+                    case 'triangle':
+                        visualHTML = '<div class="triangle-viz shape-2d"></div>';
+                        break;
+                    case 'circle':
+                        visualHTML = '<div class="circle-viz shape-2d"></div>';
+                        break;
+                    default:
+                        visualHTML = `<i class="fas fa-shapes" style="font-size: 120px; color: var(--primary-2d);"></i>`;
+                }
+            } else {
+                switch(currentShape) {
+                    case 'cube':
+                        visualHTML = `
+                            <div class="shape-3d cube-3d">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                        `;
+                        break;
+                    case 'sphere':
+                        visualHTML = '<div class="sphere-3d shape-3d"></div>';
+                        break;
+                    default:
+                        visualHTML = `<i class="fas fa-cube" style="font-size: 120px; color: var(--primary-3d);"></i>`;
+                }
+            }
+            
+            container.innerHTML = visualHTML;
+        }
+
+        // ==================== TUTORIAL SYSTEM ====================
+        function updateTutorial() {
+            const container = document.getElementById('tutorialContent');
+            const shape = shapeLibrary[currentShape];
+            
+            if (!shape || !shape.tutorial) {
+                container.innerHTML = '<p>Tutorial tidak tersedia untuk bangun ini.</p>';
+                return;
+            }
+            
+            let tutorialHTML = '';
+            
+            shape.tutorial.forEach((step, index) => {
+                tutorialHTML += `
+                    <div class="tutorial-step fade-in" style="animation-delay: ${index * 0.1}s">
+                        <div class="step-number">${index + 1}</div>
+                        <h3 class="step-title">${step.title}</h3>
+                        <div class="step-content">${step.content}</div>
+                    </div>
+                `;
+            });
+            
+            // Add general tutorial for category
+            if (shape.category === '2d') {
+                tutorialHTML += `
+                    <div class="tutorial-step fade-in" style="animation-delay: ${shape.tutorial.length * 0.1}s">
+                        <div class="step-number">${shape.tutorial.length + 1}</div>
+                        <h3 class="step-title"><i class="fas fa-lightbulb"></i> Tips Bangun Datar</h3>
+                        <div class="step-content">
+                            <ul style="padding-left: 20px;">
+                                <li>Luas selalu dalam satuan persegi (cm², m²)</li>
+                                <li>Keliling selalu dalam satuan panjang (cm, m)</li>
+                                <li>Pastikan semua pengukuran dalam satuan yang sama</li>
+                                <li>Untuk hasil akurat, gunakan minimal 2 angka desimal</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                tutorialHTML += `
+                    <div class="tutorial-step fade-in" style="animation-delay: ${shape.tutorial.length * 0.1}s">
+                        <div class="step-number">${shape.tutorial.length + 1}</div>
+                        <h3 class="step-title"><i class="fas fa-lightbulb"></i> Tips Bangun Ruang</h3>
+                        <div class="step-content">
+                            <ul style="padding-left: 20px;">
+                                <li>Volume selalu dalam satuan kubik (cm³, m³)</li>
+                                <li>Luas permukaan dalam satuan persegi (cm², m²)</li>
+                                <li>π (pi) ≈ 3.141592653589793</li>
+                                <li>Untuk bangun dengan alas, hitung luas alas terlebih dahulu</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = tutorialHTML;
+        }
+
+        // ==================== CALCULATION ENGINE ====================
+        function performCalculation() {
+            const shape = shapeLibrary[currentShape];
+            const inputs = {};
+            let isValid = true;
+            
+            // Collect and validate inputs
+            shape.inputs.forEach(inputDef => {
+                const inputElement = document.getElementById(inputDef.id);
+                const value = parseFloat(inputElement.value);
+                
+                if (isNaN(value) || value <= 0) {
+                    inputElement.classList.add('invalid');
+                    isValid = false;
+                    showError(`Input "${inputDef.label}" harus angka positif!`);
+                } else {
+                    inputElement.classList.remove('invalid');
+                    inputs[inputDef.id] = value;
+                }
+            });
+            
+            if (!isValid) return;
+            
+            // Perform calculation
+            const results = shape.calculate(inputs);
+            
+            // Display results
+            displayResults(results, inputs);
+            
+            // Update tutorial with current values
+            updateTutorialWithExamples(inputs, results);
+            
+            // Add to history
+            addToHistory(shape.name, results, inputs);
+            
+            // Save to localStorage
+            saveHistoryToStorage();
+        }
+
+        function displayResults(results, inputs) {
+            const container = document.getElementById('resultContainer');
+            const valuesContainer = document.getElementById('resultValues');
+            const shape = shapeLibrary[currentShape];
+            
+            // Update timestamp
+            document.getElementById('resultTimestamp').textContent = 
+                new Date().toLocaleTimeString('id-ID', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            
+            let resultsHTML = '';
+            
+            if (shape.category === '2d') {
+                resultsHTML = `
+                    <div class="result-box">
+                        <div class="result-type">
+                            <i class="fas fa-border-style"></i> LUAS
+                        </div>
+                        <div class="result-number">${results.area.toFixed(4)}</div>
+                        <div class="result-unit">${currentUnit}²</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-type">
+                            <i class="fas fa-ruler-combined"></i> KELILING
+                        </div>
+                        <div class="result-number">${results.perimeter.toFixed(4)}</div>
+                        <div class="result-unit">${currentUnit}</div>
+                    </div>
+                `;
+            } else {
+                resultsHTML = `
+                    <div class="result-box">
+                        <div class="result-type">
+                            <i class="fas fa-layer-group"></i> LUAS PERMUKAAN
+                        </div>
+                        <div class="result-number">${results.surfaceArea.toFixed(4)}</div>
+                        <div class="result-unit">${currentUnit}²</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-type">
+                            <i class="fas fa-weight-hanging"></i> VOLUME
+                        </div>
+                        <div class="result-number">${results.volume.toFixed(4)}</div>
+                        <div class="result-unit">${currentUnit}³</div>
+                    </div>
+                `;
+            }
+            
+            // Add formula display
+            resultsHTML += `
+                <div class="result-box" style="grid-column: 1 / -1;">
+                    <div class="result-type">
+                        <i class="fas fa-code"></i> RUMUS DIGUNAKAN
+                    </div>
+                    <div style="margin-top: 15px;">
+                        ${Object.values(shape.formulas).map(f => `
+                            <div style="background: rgba(100, 255, 218, 0.1); padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; font-family: 'Roboto Mono', monospace; color: var(--accent);">
+                                ${f}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            valuesContainer.innerHTML = resultsHTML;
+            container.style.display = 'block';
+            
+            // Smooth scroll to results
+            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function updateTutorialWithExamples(inputs, results) {
+            const exampleBoxes = document.querySelectorAll('.example-box');
+            exampleBoxes.forEach(box => {
+                const title = box.querySelector('.example-title');
+                if (title && title.textContent === 'Contoh:') {
+                    const shape = shapeLibrary[currentShape];
+                    let exampleContent = '';
+                    
+                    if (shape.category === '2d') {
+                        if (shape.name === 'Persegi') {
+                            exampleContent = `Jika s = ${inputs.side} ${currentUnit}, maka:<br>
+                            L = ${inputs.side} × ${inputs.side} = ${results.area.toFixed(2)} ${currentUnit}²<br>
+                            K = 4 × ${inputs.side} = ${results.perimeter.toFixed(2)} ${currentUnit}`;
+                        } else if (shape.name === 'Persegi Panjang') {
+                            exampleContent = `Jika p = ${inputs.length} ${currentUnit}, l = ${inputs.width} ${currentUnit}, maka:<br>
+                            L = ${inputs.length} × ${inputs.width} = ${results.area.toFixed(2)} ${currentUnit}²<br>
+                            K = 2 × (${inputs.length} + ${inputs.width}) = ${results.perimeter.toFixed(2)} ${currentUnit}`;
+                        }
+                    } else {
+                        if (shape.name === 'Kubus') {
+                            exampleContent = `Jika s = ${inputs.side} ${currentUnit}, maka:<br>
+                            L = 6 × ${inputs.side}² = ${results.surfaceArea.toFixed(2)} ${currentUnit}²<br>
+                            V = ${inputs.side}³ = ${results.volume.toFixed(2)} ${currentUnit}³`;
+                        } else if (shape.name === 'Balok') {
+                            exampleContent = `Jika p = ${inputs.length} ${currentUnit}, l = ${inputs.width} ${currentUnit}, t = ${inputs.height} ${currentUnit}, maka:<br>
+                            L = 2 × (${inputs.length}×${inputs.width} + ${inputs.length}×${inputs.height} + ${inputs.width}×${inputs.height}) = ${results.surfaceArea.toFixed(2)} ${currentUnit}²<br>
+                            V = ${inputs.length} × ${inputs.width} × ${inputs.height} = ${results.volume.toFixed(2)} ${currentUnit}³`;
+                        }
+                    }
+                    
+                    if (exampleContent) {
+                        box.innerHTML = `<div class="example-title">Contoh Perhitungan Anda:</div>${exampleContent}`;
+                    }
+                }
+            });
+        }
+
+        // ==================== HISTORY SYSTEM ====================
+        function addToHistory(shapeName, results, inputs) {
+            const historyItem = {
+                id: Date.now(),
+                shape: shapeName,
+                mode: currentMode,
+                results: results,
+                inputs: inputs,
+                unit: currentUnit,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+            
+            calculationHistory.unshift(historyItem);
+            if (calculationHistory.length > 8) {
+                calculationHistory = calculationHistory.slice(0, 8);
+            }
+            
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const container = document.getElementById('historyList');
+            
+            if (calculationHistory.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fas fa-history" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <p>Belum ada riwayat perhitungan</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let historyHTML = '';
+            
+            calculationHistory.forEach((item, index) => {
+                const icon = item.mode === '2d' ? 'fas fa-shapes' : 'fas fa-cube';
+                const color = item.mode === '2d' ? 'var(--primary-2d)' : 'var(--primary-3d)';
+                
+                historyHTML += `
+                    <div class="history-item fade-in" style="animation-delay: ${index * 0.05}s">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <i class="${icon}" style="font-size: 1.5rem; color: ${color};"></i>
+                            <div>
+                                <strong>${item.shape}</strong><br>
+                                <small style="color: var(--text-secondary);">${item.timestamp}</small>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.3rem; color: var(--accent);">
+                                ${item.mode === '2d' 
+                                    ? `${item.results.area.toFixed(2)}${item.unit}²` 
+                                    : `${item.results.volume.toFixed(2)}${item.unit}³`}
+                            </div>
+                            <small style="color: var(--text-secondary);">
+                                ${item.mode === '2d' ? 'Luas' : 'Volume'}
+                            </small>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = historyHTML;
+        }
+
+        // ==================== STORAGE FUNCTIONS ====================
+        function saveHistoryToStorage() {
+            try {
+                localStorage.setItem('geometryHistory', JSON.stringify(calculationHistory));
+            } catch (e) {
+                console.warn('Gagal menyimpan riwayat ke localStorage:', e);
+            }
+        }
+
+        function loadHistoryFromStorage() {
+            try {
+                const saved = localStorage.getItem('geometryHistory');
+                if (saved) {
+                    calculationHistory = JSON.parse(saved);
+                    updateHistoryDisplay();
+                }
+            } catch (e) {
+                console.warn('Gagal memuat riwayat dari localStorage:', e);
+            }
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function resetCalculator() {
+            // Clear all inputs
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.value = '';
+                input.classList.remove('invalid');
+            });
+            
+            // Hide results
+            document.getElementById('resultContainer').style.display = 'none';
+            
+            // Reset to default shape for current mode
+            const shapeSelect = document.getElementById('shapeSelect');
+            shapeSelect.value = currentMode === '2d' ? 'square' : 'cube';
+            
+            // Update everything
+            updateShape();
+            updateTutorial();
+            
+            // Show confirmation
+            showNotification('Semua input telah direset!', 'success');
+        }
+
+        function validateNumberInput(input) {
+            const value = parseFloat(input.value);
+            if (value <= 0 || isNaN(value)) {
+                input.classList.add('invalid');
+                return false;
+            } else {
+                input.classList.remove('invalid');
+                return true;
+            }
+        }
+
+        function showError(message) {
+            showNotification(message, 'error');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'error' ? 'var(--danger)' : 
+                          type === 'success' ? 'var(--primary-3d)' : 'var(--primary-2d)';
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${bgColor};
+                color: white;
+                padding: 18px 25px;
+                border-radius: 12px;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-out 2.7s;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                max-width: 400px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border-left: 5px solid rgba(255, 255, 255, 0.3);
+            `;
+            
+            const icon = type === 'error' ? 'fas fa-exclamation-circle' :
+                        type === 'success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
+            
+            notification.innerHTML = `
+                <i class="${icon}" style="font-size: 1.3rem;"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add fadeOut animation to style
+        if (!document.querySelector('#notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes fadeOut {
+                    from { opacity: 1; transform: translateX(0); }
+                    to { opacity: 0; transform: translateX(100px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // ==================== EXPORT FUNCTIONS FOR GLOBAL USE ====================
+        window.validateNumberInput = validateNumberInput;
+    </script>
+</body>
+</html>
